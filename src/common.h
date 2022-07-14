@@ -14,10 +14,8 @@ void cblas_sgemm_naive(const int m, const int n, const int k,
                        const float *B, const int ldb,
                        float *C, const int ldc);
 
-bool CompareResult(const int m, const int n, const int k,
+float CompareResult(const int m, const int n,
                    const float *A, const int lda,
-                   const float *B, const int ldb,
-                   float *C, const int ldc,
-                   const float error = 1e-4f);
+                   const float *B, const int ldb);
 
 #endif

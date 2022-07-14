@@ -14,6 +14,7 @@ void InitMatrix(float *p, int m, int ld)
         for (int j = 0; j < ld; ++j)
         {
             p[i * ld + j] = dis(r_eng);
+            // p[i * ld + j] = 1 + j;
         }
     }
 }
@@ -29,7 +30,8 @@ void PrintMatrix(float *p, int m, int n)
         std::cout << std::endl;
     }
 
-    std::cout << std::flush;
+    std::cout << std::endl
+              << std::flush;
 }
 
 void CopyMatrix(const int m, const int n,
@@ -42,11 +44,18 @@ void CopyMatrix(const int m, const int n,
     }
 }
 
-bool CompareResult(const int m, const int n, const int k,
-                   const float *A, const int lda,
-                   const float *B, const int ldb,
-                   float *C, const int ldc,
-                   const float error = 1e-4f)
+float CompareResult(const int m, const int n,
+                    const float *A, const int lda,
+                    const float *B, const int ldb)
 {
-    
+    float diff = 0.f;
+    for (int i = 0; i < m; ++i)
+    {
+        for (int j = 0; j < n; ++j)
+        {
+            diff += std::powf(A[i * lda + j] - B[i * ldb + j], 2);
+        }
+    }
+
+    return std::sqrt(diff);
 }
