@@ -1,6 +1,10 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+#include <intrin.h>
+
+#define SIMD_REGISTERS 4
+
 void InitMatrix(float *p, int m, int ld);
 
 void PrintMatrix(float *p, int m, int n);

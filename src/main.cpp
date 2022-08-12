@@ -2,6 +2,10 @@
 #include "timer.h"
 
 #include <iostream>
+#include <fstream>
+
+#define CONTACT(x,y) x##y
+#define STR(x) #x
 
 void cblas_sgemm(const int m, const int n, const int k,
                  const float *A, const int lda,
@@ -18,6 +22,9 @@ int main()
     constexpr int END = 800;
     constexpr int STRIDE = 40;
 
+    std::ofstream fs("../profile/gemm_1x1_0.txt", std::ios::out);
+    fs << "N" << "\t\t" << "gflops" << "\t\t" << "error" << std::endl;
+
     for (int i = START; i <= END; i += STRIDE)
     {
         int m = i;
@@ -30,6 +37,8 @@ int main()
         int ldb = n;
         // matrix C: m * n
         int ldc = n;
+
+        double flop = 2 * m * n * k;
 
         float *A = new float[m * lda];
         float *B = new float[k * ldb];
@@ -57,10 +66,11 @@ int main()
         {
             CopyMatrix(m, n, buffer, ldc, C, ldc);
             cblas_sgemm(m, n, k, A, lda, B, ldb, C, ldc);
+            // PrintMatrix(C, m, n);
             err = CompareResult(m, n, C, ldc, ref_C, ldc);
-            if (err > 1e-4f)
+            if (err > 1e-2f)
             {
-                std::cout << "Error: compare result is fail!" << std::endl;
+                std::cout << "Error: compare result is fail! error: " << err << std::endl;
             }
         }
 
@@ -73,10 +83,12 @@ int main()
             t.start();
             cblas_sgemm(m, n, k, A, lda, B, ldb, C, ldc);
             t.stop();
-            best_time = std::min(best_time, t.get_elapsed_milli_seconds());
+            best_time = std::min(best_time, t.get_elapsed_nano_seconds());
         }
 
-        std::cout << i << "\t" << best_time << "\t" << err << std::endl;
+        double gflops = flop / best_time;
+
+        fs << i << "\t\t" << gflops << "\t\t" << err << std::endl;
 
         delete[] A;
         delete[] B;
@@ -84,7 +96,8 @@ int main()
         delete[] buffer;
     }
 
-    // std::cout << "gemm compute finish!" << std::endl;
+    fs.close();
+    std::cout << "gemm compute finish!" << std::endl;
 }
 
 // int main()

@@ -14,7 +14,7 @@ void InitMatrix(float *p, int m, int ld)
         for (int j = 0; j < ld; ++j)
         {
             p[i * ld + j] = dis(r_eng);
-            // p[i * ld + j] = 1 + j;
+            // p[i * ld + j] = 1 + j + i;
         }
     }
 }
@@ -30,8 +30,7 @@ void PrintMatrix(float *p, int m, int n)
         std::cout << std::endl;
     }
 
-    std::cout << std::endl
-              << std::flush;
+    std::cout << std::flush << std::endl;
 }
 
 void CopyMatrix(const int m, const int n,
