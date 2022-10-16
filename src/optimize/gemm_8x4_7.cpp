@@ -35,14 +35,14 @@ void cblas_sgemm(const int m, const int n, const int k,
 
                 const __m128 b_v = _mm_load_ps(B + p * ldb + j);
 
-                c_0 = _mm_fmadd_ps(a_0, b_v, c_0);
-                c_1 = _mm_fmadd_ps(a_1, b_v, c_1);
-                c_2 = _mm_fmadd_ps(a_2, b_v, c_2);
-                c_3 = _mm_fmadd_ps(a_3, b_v, c_3);
-                c_4 = _mm_fmadd_ps(a_4, b_v, c_4);
-                c_5 = _mm_fmadd_ps(a_5, b_v, c_5);
-                c_6 = _mm_fmadd_ps(a_6, b_v, c_6);
-                c_7 = _mm_fmadd_ps(a_7, b_v, c_7);
+                c_0 = mm_fmadd_ps(a_0, b_v, c_0);
+                c_1 = mm_fmadd_ps(a_1, b_v, c_1);
+                c_2 = mm_fmadd_ps(a_2, b_v, c_2);
+                c_3 = mm_fmadd_ps(a_3, b_v, c_3);
+                c_4 = mm_fmadd_ps(a_4, b_v, c_4);
+                c_5 = mm_fmadd_ps(a_5, b_v, c_5);
+                c_6 = mm_fmadd_ps(a_6, b_v, c_6);
+                c_7 = mm_fmadd_ps(a_7, b_v, c_7);
             }
 
             _mm_store_ps(C + i * ldc + j, c_0);

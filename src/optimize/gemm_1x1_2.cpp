@@ -3,17 +3,15 @@ void cblas_sgemm(const int m, const int n, const int k,
                  const float *B, const int ldb,
                  float *C, const int ldc)
 {
-    // m-n-k
+    // m-k-n
     for (int i = 0; i < m; ++i)
     {
-        for (int j = 0; j < n; ++j)
+        for (int l = 0; l < k; ++l)
         {
-            float v = 0.f;
-            for (int l = 0; l < k; ++l)
+            for (int j = 0; j < n; ++j)
             {
-                v += A[i * lda + l] * B[l * ldc + j];
+                C[i * ldc + j] += A[i * lda + l] * B[l * ldb + j];
             }
-            C[i * ldc + j] += v;
         }
     }
 }

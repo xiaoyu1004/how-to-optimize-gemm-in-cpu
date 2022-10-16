@@ -14,15 +14,15 @@ void cblas_sgemm(const int m, const int n, const int k,
 
 int main()
 {
-    constexpr int LDA = 1000;
-    constexpr int LDB = 1000;
-    constexpr int LDC = 1000;
+    // constexpr int LDA = 1000;
+    // constexpr int LDB = 1000;
+    // constexpr int LDC = 1000;
 
     constexpr int START = 40;
     constexpr int END = 800;
     constexpr int STRIDE = 40;
 
-    std::ofstream fs("../profile/gemm_1x1_0.txt", std::ios::out);
+    std::ofstream fs("../profile/gemm_1x1_3.txt", std::ios::out);
     fs << "N" << "\t\t" << "gflops" << "\t\t" << "error" << std::endl;
 
     for (int i = START; i <= END; i += STRIDE)

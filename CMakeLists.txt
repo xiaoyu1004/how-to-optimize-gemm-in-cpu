@@ -1,7 +1,10 @@
 cmake_minimum_required(VERSION 3.10)
 project(GemmCompute)
 
-set(exe_file gemm_1x1_0)
+# set(exe_file gemm_1x1_0)
+# set(exe_file gemm_1x1_1)
+# set(exe_file gemm_1x1_2)
+set(exe_file gemm_1x1_3)
 # set(exe_file gemm_4x1_1)
 # set(exe_file gemm_4x4_2)
 # set(exe_file gemm_4x4_3)

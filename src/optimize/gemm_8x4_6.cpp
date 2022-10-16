@@ -22,7 +22,7 @@ void cblas_sgemm(const int m, const int n, const int k,
                 for (int r = 0; r < SIMD_REGISTERS; ++r)
                 {
                     __m128 a_v = _mm_load_ps1(A + (i + r) * lda + p);
-                    re[r] = _mm_fmadd_ps(a_v, b_v, re[r]);
+                    re[r] = mm_fmadd_ps(a_v, b_v, re[r]);
                 }
             }
 
