@@ -5,7 +5,7 @@
 
 std::random_device rd;
 std::default_random_engine r_eng(rd());
-std::uniform_real_distribution<float> dis(-1, 1);
+std::uniform_int_distribution<int> dis(-10, 10);
 
 void InitMatrix(float *p, int m, int ld)
 {
@@ -13,7 +13,7 @@ void InitMatrix(float *p, int m, int ld)
     {
         for (int j = 0; j < ld; ++j)
         {
-            p[i * ld + j] = dis(r_eng);
+            p[i * ld + j] = static_cast<float>(dis(r_eng));
             // p[i * ld + j] = 1 + j + i;
         }
     }

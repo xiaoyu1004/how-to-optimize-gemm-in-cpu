@@ -4,7 +4,6 @@ project(GemmCompute)
 # set(exe_file gemm_1x1_0)
 # set(exe_file gemm_1x1_1)
 # set(exe_file gemm_1x1_2)
-set(exe_file gemm_1x1_3)
 # set(exe_file gemm_4x1_1)
 # set(exe_file gemm_4x4_2)
 # set(exe_file gemm_4x4_3)
@@ -12,6 +11,9 @@ set(exe_file gemm_1x1_3)
 # set(exe_file gemm_4x4_5)
 # set(exe_file gemm_8x4_6)
 # set(exe_file gemm_8x4_7)
+# set(exe_file gemm_cache_block_4x4_8)
+# set(exe_file gemm_cache_block_packA_4x4_8)
+set(exe_file gemm_cache_block_packA_packB_4x4_8)
 
 set(srcs ./src/common.cpp
          ./src/main.cpp

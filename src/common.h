@@ -2,6 +2,8 @@
 #define COMMON_H
 
 #include <intrin.h>
+#include <cmath>
+#include <algorithm>
 
 #define SIMD_REGISTERS 4
 

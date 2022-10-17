@@ -18,11 +18,11 @@ int main()
     // constexpr int LDB = 1000;
     // constexpr int LDC = 1000;
 
-    constexpr int START = 40;
-    constexpr int END = 800;
-    constexpr int STRIDE = 40;
+    constexpr int START = 64;
+    constexpr int END = 2048;
+    constexpr int STRIDE = 64;
 
-    std::ofstream fs("../profile/gemm_1x1_3.txt", std::ios::out);
+    std::ofstream fs("../profile/gemm_cache_block_packA_packB_4x4_8.txt", std::ios::out);
     fs << "N" << "\t\t" << "gflops" << "\t\t" << "error" << std::endl;
 
     for (int i = START; i <= END; i += STRIDE)
@@ -38,7 +38,7 @@ int main()
         // matrix C: m * n
         int ldc = n;
 
-        double flop = 2 * m * n * k;
+        double flop = 2 * (double)m * n * k;
 
         float *A = new float[m * lda];
         float *B = new float[k * ldb];
@@ -68,7 +68,7 @@ int main()
             cblas_sgemm(m, n, k, A, lda, B, ldb, C, ldc);
             // PrintMatrix(C, m, n);
             err = CompareResult(m, n, C, ldc, ref_C, ldc);
-            if (err > 1e-2f)
+            if (err > 1e-4f)
             {
                 std::cout << "Error: compare result is fail! error: " << err << std::endl;
             }
@@ -76,7 +76,7 @@ int main()
 
         timer t;
         double best_time = FLT_MAX;
-        constexpr int loop_count = 5;
+        constexpr int loop_count = 10;
         for (int l = 0; l < loop_count; ++l)
         {
             CopyMatrix(m, n, buffer, ldc, C, ldc);
