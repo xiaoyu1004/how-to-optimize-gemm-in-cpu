@@ -19,10 +19,10 @@ int main()
     // constexpr int LDC = 1000;
 
     constexpr int START = 64;
-    constexpr int END = 2048;
-    constexpr int STRIDE = 64;
+    constexpr int END = 8192;
+    constexpr int STRIDE = 128;
 
-    std::ofstream fs("../profile/gemm_cache_block_packA_packB_4x4_8.txt", std::ios::out);
+    std::ofstream fs("../profile/gemm_cache_block_4x4_9.txt", std::ios::out);
     fs << "N" << "\t\t" << "gflops" << "\t\t" << "error" << std::endl;
 
     for (int i = START; i <= END; i += STRIDE)

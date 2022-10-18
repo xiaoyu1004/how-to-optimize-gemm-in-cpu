@@ -13,7 +13,8 @@ project(GemmCompute)
 # set(exe_file gemm_8x4_7)
 # set(exe_file gemm_cache_block_4x4_8)
 # set(exe_file gemm_cache_block_packA_4x4_8)
-set(exe_file gemm_cache_block_packA_packB_4x4_8)
+# set(exe_file gemm_cache_block_packA_packB_4x4_8)
+set(exe_file gemm_cache_block_4x4_9)
 
 set(srcs ./src/common.cpp
          ./src/main.cpp

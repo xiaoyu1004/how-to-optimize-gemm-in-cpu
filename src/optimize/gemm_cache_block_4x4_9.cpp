@@ -4,28 +4,6 @@
 #define MC 8
 #define NC 128
 
-void PackMatrixA(int m, int pk, int kc, const float *from, int lda, float *to)
-{
-    for (int i = 0; i < m; ++i)
-    {
-        for (int j = 0; j < pk; ++j)
-        {
-            to[i * kc + j] = from[i * lda + j];
-        }
-    }
-}
-
-void PackMatrixB(int pn, int nc, int pk, int kc, const float *from, int ldb, float *to)
-{
-    for (int i = 0; i < pk; ++i)
-    {
-        for (int j = 0; j < pn; ++j)
-        {
-            to[i * nc + j] = from[i * ldb + j];
-        }
-    }
-}
-
 void inner_gemm_kernel(const int m, const int n, const int k,
                        const float *A, const int lda,
                        const float *B, const int ldb,
@@ -130,28 +108,20 @@ void cblas_sgemm(const int m, const int n, const int k,
                  const float *B, const int ldb,
                  float *C, const int ldc)
 {
-    float *packA = new float[m * KC]{0};
-    float *packB = new float[KC * NC]{0};
-
-    for (int p = 0; p < k; p += KC)
+    for (int i = 0; i < m; i += MC)
     {
-        int inner_k = std::min(k - p, KC);
-        PackMatrixA(m, inner_k, KC, A + p, lda, packA);
-        for (int j = 0; j < n; j += NC)
+        int inner_m = std::min(m - i, MC);
+        for (int p = 0; p < k; p += KC)
         {
-            int inner_n = std::min(n - j, NC);
-            PackMatrixB(inner_n, NC, inner_k, KC, B + p * ldb + j, ldb, packB);
-            for (int i = 0; i < m; i += MC)
+            int inner_k = std::min(k - p, KC);
+            for (int j = 0; j < n; j += NC)
             {
-                int inner_m = std::min(m - i, MC);
+                int inner_n = std::min(n - j, NC);
                 inner_gemm_kernel(inner_m, inner_n, inner_k,
-                                  packA + i * KC, KC,
-                                  packB, NC,
+                                  A + i * lda + p, lda,
+                                  B + p * ldb + j, ldb,
                                   C + i * ldc + j, ldc);
             }
         }
     }
-
-    delete[] packA;
-    delete[] packB;
 }
